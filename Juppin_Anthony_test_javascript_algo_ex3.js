@@ -27,21 +27,6 @@ const verifierColonne = (tab) => {
 verifierColonne(to_verify);
 
 const verifierBox = (tab) => {
-  for (var m = 0; m < tab.length; m++) {
-    let box = [];
-    for (var i = 0; i < tab.length; i += 3) {
-      for (var j = i; j < i + 3; j++) {
-        box.push(tab[i][j]);
-      }
-    }
-    if (!testSudoku(box)) {
-      console.log(`La boîte ${m + 1} est incorrecte. Les valeurs sont ${box}`);
-    }
-  }
-};
-// derniere fonction non fonctionnelle
-
-const verifierBox1 = (tab) => {
   for (var m = 0; m < tab.length; m += 3) {
     for (var n = 0; n < tab.length; n += 3) {
       let box = [];
@@ -57,4 +42,4 @@ const verifierBox1 = (tab) => {
   }
 };
 
-verifierBox1(to_verify);
+verifierBox(to_verify);
