@@ -1,14 +1,23 @@
 const verifierLigne = (tab) => {
   for (var i = 0; i < tab.length; i++) {
-    if (testSudoku(tab[i]) === false) {
-      console.log(
-        `La ligne ${i + 1} est incorrecte. Les valeurs sont ${tab[i]}`
-      );
+    if (!testSudoku(tab[i])) {
+      let ligne = document.createElement("tr");
+      ligne.id = "ligne" + i;
+      document.getElementById("tableErreur").appendChild(ligne);
+
+      let entete = document.createElement("td");
+      entete.innerHTML = `Ligne ${i} incorrect`;
+      ligne.appendChild(entete);
+
+      for (var k = 0; k < tab[i].length; k++) {
+        let cellule = document.createElement("td");
+        cellule.innerHTML = tab[i][k];
+        ligne.appendChild(cellule);
+      }
+      return true;
     }
   }
 };
-
-verifierLigne(to_verify);
 
 const verifierColonne = (tab) => {
   for (var j = 0; j < tab.length; j++) {
@@ -17,14 +26,22 @@ const verifierColonne = (tab) => {
       colonne.push(tab[i][j]);
     }
     if (!testSudoku(colonne)) {
-      console.log(
-        `La colonne ${j + 1} est incorrecte. Les valeurs sont ${colonne}`
-      );
+      let ligne = document.createElement("tr");
+      ligne.id = "colonne" + i;
+      document.getElementById("tableErreur").appendChild(ligne);
+      let entete = document.createElement("td");
+      entete.innerHTML = `Colonne ${j} incorrect`;
+      ligne.appendChild(entete);
+
+      for (var k = 0; k < colonne.length; k++) {
+        let cellule = document.createElement("td");
+        cellule.innerHTML = tab[k][j];
+        ligne.appendChild(cellule);
+      }
+      return true;
     }
   }
 };
-
-verifierColonne(to_verify);
 
 const verifierBox = (tab) => {
   for (var m = 0; m < tab.length; m += 3) {
@@ -36,10 +53,36 @@ const verifierBox = (tab) => {
         }
       }
       if (!testSudoku(box)) {
-        console.log(`La boîte est incorrecte. Les valeurs sont ${box}`);
+        let ligne = document.createElement("tr");
+        ligne.id = "ligne" + i;
+        document.getElementById("tableErreur").appendChild(ligne);
+
+        let entete = document.createElement("td");
+        entete.innerHTML = `Box ${i} incorrect`;
+        ligne.appendChild(entete);
+
+        for (var k = 0; k < box.length; k++) {
+          let cellule = document.createElement("td");
+          cellule.innerHTML = box[k];
+          ligne.appendChild(cellule);
+        }
+        return true;
       }
     }
   }
 };
 
-verifierBox(to_verify);
+const sudokuValider = (tab) => {
+  let ligne = verifierLigne(tab);
+  let colonne = verifierColonne(tab);
+  let box = verifierBox(tab);
+  let titre = document.createElement("h3");
+  if (!ligne && !colonne && !box) {
+    titre.innerHTML = "Le sudoku est correct";
+  } else {
+    titre.innerHTML = "Le sudoku est incorrect";
+  }
+  document.body.appendChild(titre);
+};
+
+sudokuValider(to_verify);
